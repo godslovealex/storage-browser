@@ -341,7 +341,7 @@ export default function StorageBrowser() {
   const [buckets, setBuckets] = useState(() => seedRef.current);
   const [currentBucketId, setCurrentBucketId] = useState(() => seedRef.current[0]?.id ?? null);
   const [membersByBucket, setMembersByBucket] = useState(() => ({}));
-  const [backendConfig, setBackendConfig] = useState({ mode: "rest", baseUrl: "https://storage-browser.onrender.com", apiKey: "", status: "idle", statusMessage: "" });
+  const [backendConfig, setBackendConfig] = useState({ mode: "rest", baseUrl: "https://storage-browser.onrender.com", apiKey: "", status: "connected", statusMessage: "Connected" });
 
   const [currentPath, setCurrentPath] = useState([]);
   const [selectedIds, setSelectedIds] = useState(() => new Set());
@@ -403,6 +403,21 @@ export default function StorageBrowser() {
         setIsLoaded(true);
       }
     })();
+  }, []);
+
+  // ---------- auto-connect to production API ----------
+  useEffect(() => {
+    fetch("https://storage-browser.onrender.com/health")
+      .then((r) => {
+        if (r.ok) setBackendConfig((bc) => ({
+          ...bc,
+          mode: "rest",
+          baseUrl: "https://storage-browser.onrender.com",
+          status: "connected",
+          statusMessage: "Connected",
+        }));
+      })
+      .catch(() => {});
   }, []);
 
   // ---------- persist on change (debounced) ----------
