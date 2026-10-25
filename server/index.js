@@ -28,7 +28,14 @@ const API_KEY = process.env.API_KEY; // optional bearer-token guard
 
 // ── App ──────────────────────────────────────────────────────────────────────
 const app = express();
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://storage-browser-drab.vercel.app",
+    ],
+  }),
+);
 app.use(express.json());
 
 // Optional API-key auth (skipped if API_KEY not set in .env)
