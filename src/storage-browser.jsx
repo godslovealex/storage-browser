@@ -341,7 +341,7 @@ export default function StorageBrowser() {
   const [buckets, setBuckets] = useState(() => seedRef.current);
   const [currentBucketId, setCurrentBucketId] = useState(() => seedRef.current[0]?.id ?? null);
   const [membersByBucket, setMembersByBucket] = useState(() => ({}));
-  const [backendConfig, setBackendConfig] = useState({ mode: "demo", baseUrl: "", apiKey: "", status: "idle", statusMessage: "" });
+  const [backendConfig, setBackendConfig] = useState({ mode: "rest", baseUrl: "https://storage-browser.onrender.com", apiKey: "", status: "idle", statusMessage: "" });
 
   const [currentPath, setCurrentPath] = useState([]);
   const [selectedIds, setSelectedIds] = useState(() => new Set());
